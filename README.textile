@@ -18,21 +18,21 @@ In a controller spec:
 <pre>
 describe "GET /posts/1" do
 
-	integrate_views
+  integrate_views
 
-	before do
-		@post = Grab.one_post :title => "This is my first post"
-	end
-	
-	def	do_get
-		get :show, :id => @post
-	end
-	
-	it "should show the post title" do
-		do_get
-		response.should include_text(/This is my first post/)
-	end
-
+  before do
+  	@post = Grab.one_post :title => "This is my first post"
+  end
+  
+  def	do_get
+  	get :show, :id => @post
+  end
+  
+  it "should show the post title" do
+  	do_get
+  	response.should include_text(/This is my first post/)
+  end
+  
 end
 </pre>
 
