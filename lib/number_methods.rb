@@ -1,6 +1,5 @@
 module NumberMethods
 
-    
     UNITS = {
       "one"   => 1, 
       "two"   => 2, 
