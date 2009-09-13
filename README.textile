@@ -6,7 +6,22 @@ p. The idea is simple: most of the time, when using factories, you don't really 
 
 p. At the moment, only "factory_girl":http://github.com/thoughtbot/factory_girl by thoughtbot is supported. If you'd like to see more factories supported please let me know (gavin@handyrailstips.com)
 
+h2. To install:
+
+h4. As a gem:
+
+<pre>sudo gem install git://github.com/GavinM/factory_grabber.git</pre>
+
+h4. As a plugin:
+
+<pre>script/plugin install git://github.com/GavinM/factory_grabber.git</pre>
+
 h2. Example Usage
+
+First, add the following line to *spec_helper.rb* or *test_helper.rb*:
+<pre>
+	require "factory_grabber/grab"
+</pre>
 
 To grab 4 users named "John Smith":
 <pre>@users = Grab.four_users(:first_name => "John", :last_name => "Smith")</pre>

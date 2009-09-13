@@ -1,2 +1,2 @@
-require "factory_grabber/grab"
+require File.dirname(__FILE__) + "/factory_grabber/grab"
 

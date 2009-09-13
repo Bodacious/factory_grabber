@@ -1,8 +1,9 @@
 class Grab
-
-  require "activesupport" unless defined?(ActiveSupport::Inflector)
-  require "number_methods"
+  require "rubygems"
+  require "activesupport" unless defined?(ActiveSupport::Inflector) # load active support if not in Rails
   require "factory_girl"
+  
+  require File.dirname(__FILE__) + "/number_methods"
   include NumberMethods
 
   # create a blank slate
