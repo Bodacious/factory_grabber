@@ -1,1 +1,1 @@
-require "lib/factory_grabber"
+require "factory_grabber"
