@@ -1,1 +1,2 @@
-require "grab"
+require "factory_grabber/grab"
+
