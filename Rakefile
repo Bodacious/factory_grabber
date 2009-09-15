@@ -7,7 +7,7 @@ Echoe.new("factory_grabber", "1.0.1") do |p|
   p.url                      = "http://github.com/gavinM/factory_grabber"
   p.author                   = "Gavin Morrice"
   p.email                    = "gavin@handyrailstips.com"
-  p.ignore_pattern           = ["tmp/*", "script/*"]
+  p.ignore_pattern           = ["tmp/*", "script/*", "dbfile"]
   p.development_dependencies = []
 end
 

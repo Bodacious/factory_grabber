@@ -2,43 +2,36 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 describe Grab do
   
-  describe "Grabbing various number combinations" do
+  describe "Grabbing 'a' or 'an' record" do
     
-    it "should grab the correct number of records each time" do
-      @users = Grab.ninety_users
-      @users.size.should == 90
-      
-      @users = Grab.one_user
-      @users.size.should == 1
-
-      @users = Grab.twelve_users
-      @users.size.should == 12
-
-      @users = Grab.twenty_three_users
-      @users.size.should == 23
-
-      @users = Grab.thirty_four_users
-      @users.size.should == 34
-      
-      @users = Grab.forty_five_users
-      @users.size.should == 45
-
-      @users = Grab.fifty_six_users
-      @users.size.should == 56
-      
-      @users = Grab.sixty_seven_users
-      @users.size.should == 67
-      
-      @users = Grab.seventy_eight_users
-      @users.size.should == 78
-      
-      @users = Grab.eighty_nine_users
-      @users.size.should == 89
-      
-
+    it "should return one record if number is 'a'" do
+      @user = Grab.a_user
+      @user.is_a?(User).should be_true
+    end
+    
+    it "should return one record if number is 'an'" do
+      @user = Grab.an_user
+      @user.is_a?(User).should be_true
     end
 
-
+    
+  end
+  
+  describe "Grabbing various number combinations" do
+    
+    it "should return the record if number is one" do
+      @user = Grab.one_user
+      @user.is_a?(User).should be_true
+    end
+    
+    it "should grab the correct number of records each time" do
+      # random number between 1 and 99
+      random_number = (rand * 99).ceil
+      # return the number name eg. sixty_one
+      random_name = Grab::ALL_NUMBERS.invert[random_number]
+      @users = Grab.send("#{random_name}_users")
+      @users.size.should == random_number
+    end
   
   end
   
@@ -49,23 +42,34 @@ describe Grab do
     end
     
     it "should not create a new record if there is one present" do
-      Factory.should_not_receive(:create).with(:user, {})
-      Grab.one_user
+      lambda { Grab.one_user }.should_not change { User.count }
     end
     
   end
-
+  
   describe "Grabbing non-existing records" do
-
+  
     before do
       User.destroy_all
     end
     
     it "should create a new record" do
-      Factory.should_receive(:create).with(:user, {})
-      Grab.one_user
+      lambda { Grab.one_user }.should change { User.count }.by(1)
     end
-
+  
+  end
+  
+  describe "Grabbing a mixture of existing and non-existing records" do
+    
+    before do
+      User.destroy_all
+      2.times { Factory :user }
+    end
+    
+    it "should only create one extra record" do
+      lambda { Grab.three_users }.should change { User.count }.by(1)
+    end
+    
   end
   
   describe :number_name do
@@ -147,7 +151,7 @@ describe Grab do
       Grab.three_users
       Grab.send(:required_records).should be_nil
     end
-
+  
     
   end
   

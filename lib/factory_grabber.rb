@@ -71,14 +71,25 @@ module FactoryGrabber
       # options passed to the method.
       def method_missing(name, options = {})
         @options = options
-        @name    = name
         @parts_in_name = name.to_s.split("_")
+        
+        # replace 'a' or 'an' with 'one'
+        if @parts_in_name.first == "a" || @parts_in_name.first == "an"
+          @parts_in_name.delete_at(0)
+          @parts_in_name.unshift("one")
+        end
+        # rejoins the name with 'a' and 'an' replaced with 'one'
+        @name = @parts_in_name.join("_")
 
         # create new records if there is not a sufficient amount in the database
         required_records ? required_records.times { create_factory } : nil
         
         # find and return the desired records
-        return klass_name_constant.all(:conditions => @options, :limit => number)
+        if number.to_i > 1
+          klass_name_constant.all(:conditions => @options, :limit => number)
+        else
+          klass_name_constant.first(:conditions => @options)
+        end
       end
 
       private

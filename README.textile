@@ -27,12 +27,19 @@ h2. Example Usage
 
 First, add the following line to *spec_helper.rb* or *test_helper.rb*:
 <pre><code>require "factory_grabber"</code></pre>
+To grab 1 comment:
+<pre><code>@comment = Grab.a_comment</code></pre>
+
+To grab 1 article:
+<pre><code>@article = Grab.an_article</code></pre>
 
 To grab 4 users named "John Smith":
 <pre><code>@users = Grab.four_users(:first_name => "John", :last_name => "Smith")</code></pre>
 
 Grab 73 users with standard factory attributes:
 <pre><code>@users = Grab.seventy_three_users</code></pre>
+
+h3. Practical examples:
 
 In a controller spec:
 <pre>
@@ -42,7 +49,8 @@ describe "GET /posts/1" do
   integrate_views
 
   before do
-  	@post = Grab.one_post :title => "This is my first post"
+		# will create a record with these attributes if required, if not it will find the existing record
+  	@post = Grab.one_post :title => "This is my first post", :body => "This is the post body"
   end
   
   def	do_get
@@ -53,7 +61,37 @@ describe "GET /posts/1" do
   	do_get
   	response.should include_text(/This is my first post/)
   end
+
+	it "should show the post body" do
+		do_get
+		response.should include_text(/This is the post body/)
+	end
   
+end
+
+
+describe "GET /posts?page=1" do
+	
+	# testing pagination
+
+	integrate_views
+	
+	before do
+		# ensures there are at least eleven Post records
+		# if there are less than eleven, new posts are created
+		# if there are eleven or more no posts are created
+		Grab.eleven_posts
+	end
+	
+	def	do_get
+		get :index, :page => 1
+	end
+	
+	it "should find the latest 10 posts" do
+		do_get
+		assigns[:posts].should == Post.find(:all, :order => "created_at DESC", :limit => 10)
+	end
+
 end
 </code>
 </pre>
@@ -89,7 +127,7 @@ eg.
 	<code>
 Factory(:admin_user, :class => :user) {	|f| f.admin(true) }
 
-Grab.one_admin_user # => will not find records from the database.
+Grab.an_admin_user # => will not find records from the database.
 	</code>
 </pre>
 h2. Feedback

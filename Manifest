@@ -3,8 +3,8 @@ Manifest
 README.textile
 Rakefile
 dbfile
-factory_grabber.gemspec
 init.rb
+lib/dbfile
 lib/factory_grabber.rb
 lib/spec/database_setup.rb
 lib/spec/dbfile
