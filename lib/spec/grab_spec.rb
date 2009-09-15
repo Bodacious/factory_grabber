@@ -25,6 +25,7 @@ describe Grab do
     
     it "should grab the correct number of records each time" do
       # random number between 1 and 99
+      # running these specs hundreds of times (which I have) means that each number will be tested
       random_number = (rand * 99).ceil
       # return the number name eg. sixty_one
       random_name = Grab::ALL_NUMBERS.invert[random_number]
@@ -77,8 +78,9 @@ describe Grab do
     # In such cases, to ensure the record has the desired attributes, a new factory should be created
     
     it "should create a new factory if attributes are not all in the database" do
-      Grab.one_user(:password => "password")
-      lambda { Grab.one_user(:password => "password")}.should change { User.count }.by(1)
+      Factory(:user, :password => "password")
+      lambda { @user = Grab.one_user(:password => "password") }.should change { User.count }.by(1)
+      @user.is_a?(User).should be_true
     end
     
   end

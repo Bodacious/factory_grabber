@@ -96,12 +96,10 @@ module FactoryGrabber
           required_records ? required_records.times { create_factory } : nil
         
           # find and return the desired records
-          @results = if number.to_i > 1
-            klass_name_constant.all(:conditions => @options, :limit => number)
-          else
-            klass_name_constant.first(:conditions => @options)
-          end
+          @results = klass_name_constant.all(:conditions => @options, :limit => number)
         end
+        # return a single record if only one exists
+        @results.size == 1 ? @results.first : @results
       end
 
       private
@@ -153,7 +151,7 @@ module FactoryGrabber
       
       # TODO rewrite this to accept various factory gems
       def create_factory
-        Factory klass_name_symbol, @options
+        Factory(klass_name_symbol, @options)
       end
 
       # returns the number of records required minus the number of records available. If there are enough
