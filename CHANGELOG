@@ -1,3 +1,8 @@
+Version 1.0.3
+	- Added support for virtual attributes
+
+Version 1.0.1
+	- Re-wrote README as Markdown
 
 Version 1.0.1 released Tuesday 15th September [Gavin Morrice]
 	- Removed the NumberMethods. Instead of dynamically creating a method for each number, ghost methods are 'created' using method_missing.

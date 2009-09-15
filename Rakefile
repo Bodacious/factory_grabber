@@ -2,7 +2,7 @@ require "rubygems"
 require "rake"
 require "echoe"
 
-Echoe.new("factory_grabber", "1.0.1") do |p|
+Echoe.new("factory_grabber", "1.0.3") do |p|
   p.description              = "Grab or create factories for faster Functional/Integration testing"
   p.url                      = "http://github.com/gavinM/factory_grabber"
   p.author                   = "Gavin Morrice"

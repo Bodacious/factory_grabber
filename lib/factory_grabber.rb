@@ -80,19 +80,42 @@ module FactoryGrabber
         end
         # rejoins the name with 'a' and 'an' replaced with 'one'
         @name = @parts_in_name.join("_")
-
-        # create new records if there is not a sufficient amount in the database
-        required_records ? required_records.times { create_factory } : nil
         
-        # find and return the desired records
-        if number.to_i > 1
-          klass_name_constant.all(:conditions => @options, :limit => number)
-        else
-          klass_name_constant.first(:conditions => @options)
+        # check the options if there are any
+        unless @options.empty?
+          check_options_against_database
+        end
+
+        # results to be returned
+        @results = []
+        
+        if @should_create_new
+          number.times { @results << create_factory }
+        else 
+          # create new records if there is not a sufficient amount in the database
+          required_records ? required_records.times { create_factory } : nil
+        
+          # find and return the desired records
+          @results = if number.to_i > 1
+            klass_name_constant.all(:conditions => @options, :limit => number)
+          else
+            klass_name_constant.first(:conditions => @options)
+          end
         end
       end
 
       private
+      
+      # checks the database columns to ensure options are all database columns
+      # if they are not (in the case of virtual attributes) a new factory should be created
+      def check_options_against_database
+        # extract the keys from the options hash as strings
+        option_keys = @options.stringify_keys.keys
+        # fetch the names of the Class's database table columns
+        klass_columns = klass_name_constant.columns.collect { |c| c.name }
+        # @should create new will be true if there are any option keys that are not in db table
+        @should_create_new = !!option_keys.detect { |opt| !klass_columns.include?(opt) }
+      end
 
       # returns the number part of the method name eg. nineteen
       def number_name

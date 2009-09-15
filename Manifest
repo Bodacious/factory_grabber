@@ -1,8 +1,8 @@
 CHANGELOG
 Manifest
-README.textile
+README.md
 Rakefile
-dbfile
+factory_grabber.gemspec
 init.rb
 lib/dbfile
 lib/factory_grabber.rb
