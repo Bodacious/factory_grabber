@@ -3,5 +3,6 @@ Version 1.0.1 released Tuesday 15th September [Gavin Morrice]
 	- Removed the NumberMethods. Instead of dynamically creating a method for each number, ghost methods are 'created' using method_missing.
 	- Updated README
 	- Updated Rdoc
+	- Added support for 'a' and 'an': Grab.an_author
 	
 Version 1.0.0 released Sunday 13th September [Gavin Morrice]
