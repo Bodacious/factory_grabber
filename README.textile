@@ -74,6 +74,17 @@ Grab 50 factories at once    0.020000   0.000000   0.020000 (  0.011400)
 
 (These results can be produced for your own environment by running the file "performance_test.rb" in factory_grabber/lib/spec/performance_test.rb)
 
+h2. Known Issues
+
+At the moment, existing factories are found calling the model name. If your factory names do not match the name of the models then new factories will be created each time.
+eg.
+<pre>
+	<code>
+Factory(:admin_user, :class => :user) {	|f| f.admin(true) }
+
+Grab.one_admin_user # => will not find records from the database.
+	</code>
+</pre>
 h2. Feedback
 
 p. This project is still an infant - if the Ruby community find it useful I plan on adding a lot more. Please send any ideas/feedback to gavin@handyrailstips.com
