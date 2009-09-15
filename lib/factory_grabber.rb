@@ -1,12 +1,11 @@
 # load active support if not in Rails
 require "activesupport" unless defined?(ActiveSupport::Inflector)
 require "factory_girl"
-
 module FactoryGrabber
   
   class NotANumberError < NoMethodError;end
   
-  class Grab
+  module Grab
     
     # numbers 1 to 9
     UNITS =  {
@@ -70,7 +69,7 @@ module FactoryGrabber
       # If method_missing cannot identify the number and the factory to be created it will pass
       # this up the chain to Object. @name is the method name called (symbol) and options is the hash of
       # options passed to the method.
-      def self.method_missing(name, options = {})
+      def method_missing(name, options = {})
         @options = options
         @name    = name
         @parts_in_name = name.to_s.split("_")
@@ -142,3 +141,4 @@ module FactoryGrabber
   end
 
 end
+include FactoryGrabber

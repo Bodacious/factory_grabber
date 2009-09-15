@@ -10,27 +10,33 @@ h2. To install:
 
 h4. As a gem:
 
-<pre>sudo gem install git://github.com/GavinM/factory_grabber.git</pre>
+<pre>
+sudo gem install git://github.com/GavinM/factory_grabber.git
+
+# environment.rb
+config.gem "thoughtbot-factory_girl", :lib => "factory_girl"
+config.gem "factory_grbber", :version => ">=1.0.1", :lib => false
+</pre>
+
 
 h4. As a plugin:
 
-<pre>script/plugin install git://github.com/GavinM/factory_grabber.git</pre>
+<pre><code>script/plugin install git://github.com/GavinM/factory_grabber.git</code></pre>
 
 h2. Example Usage
 
 First, add the following line to *spec_helper.rb* or *test_helper.rb*:
-<pre>
-	require "factory_grabber/grab"
-</pre>
+<pre><code>require "factory_grabber"</code></pre>
 
 To grab 4 users named "John Smith":
-<pre>@users = Grab.four_users(:first_name => "John", :last_name => "Smith")</pre>
+<pre><code>@users = Grab.four_users(:first_name => "John", :last_name => "Smith")</code></pre>
 
 Grab 73 users with standard factory attributes:
-<pre>@users = Grab.seventy_three_users</pre>
+<pre><code>@users = Grab.seventy_three_users</code></pre>
 
 In a controller spec:
 <pre>
+<code>
 describe "GET /posts/1" do
 
   integrate_views
@@ -49,6 +55,7 @@ describe "GET /posts/1" do
   end
   
 end
+</code>
 </pre>
 
 p. At the moment, all numbers between one and ninety_nine are supported. The general syntax for Grab methods is:

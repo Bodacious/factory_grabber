@@ -4,9 +4,6 @@ describe Grab do
   
   describe "Grabbing various number combinations" do
     
-    before do
-    end
-    
     it "should grab the correct number of records each time" do
       @users = Grab.ninety_users
       @users.size.should == 90
