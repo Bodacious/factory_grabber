@@ -23,6 +23,18 @@ As a gem:
 As a plugin:
 ------------
 		script/plugin install git://github.com/GavinM/factory_grabber.git
+		
+		
+Important:
+----------
+		
+To benefit from this gem, set use_transactional_fixtures=() to false in *spec_helper.rb*
+		
+    Spec::Runner.configure do |config|
+      config.use_transactional_fixtures = false
+			config.use_instantiated_fixtures  = false
+		  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+    end
 
 Example Usage
 =============

@@ -76,7 +76,6 @@ describe Grab do
     # Attributes such as password can be set when creating factories but may not have a corresponding
     # column on the database (ie. they are virtual attributes)
     # In such cases, to ensure the record has the desired attributes, a new factory should be created
-    
     it "should create a new factory if attributes are not all in the database" do
       Factory(:user, :password => "password")
       lambda { @user = Grab.one_user(:password => "password") }.should change { User.count }.by(1)
