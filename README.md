@@ -10,104 +10,116 @@ At the moment, only [factory_girl](http://github.com/thoughtbot/factory_girl) by
 To install:
 ===========
 
+``` ruby
+gem install git://github.com/GavinM/factory_grabber.git
 
-		gem install git://github.com/GavinM/factory_grabber.git
-
-		# Gemfile
-		group :test do
-  		gem "factory_girl_rails"
-  		gem "factory_grbber"
-		end
+# Gemfile
+group :test do
+	gem "factory_girl_rails"
+	gem "factory_grbber"
+end
+```
 
 Important:
 ----------
 		
 To benefit from this gem, set use_transactional_fixtures=() to false in *spec_helper.rb*
-		
-    Spec::Runner.configure do |config|
-      config.use_transactional_fixtures = false
-			config.use_instantiated_fixtures  = false
-		  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
-    end
+	
+```	ruby
+Spec::Runner.configure do |config|
+  config.use_transactional_fixtures = false
+	config.use_instantiated_fixtures  = false
+  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+end
+```
 
 Example Usage
 =============
 
 First, add the following line to *spec_helper.rb* or *test_helper.rb*:
 
-		require "factory_grabber"
+``` ruby
+require "factory_grabber"
+```
 
 Then, in your tests/specs:
 		
-		# to grab 1 comment:
-		@comment = Grab.a_comment
+``` ruby
+# to grab 1 comment:
+@comment = Grab.a_comment
 
-		# to grab 1 article:
-		@article = Grab.an_article
+# to grab 1 article:
+@article = Grab.an_article
 
-		#to grab 4 users named "John Smith":
-		@users = Grab.four_users(:first_name => "John", :last_name => "Smith")
+#to grab 4 users named "John Smith":
+@users = Grab.four_users(:first_name => "John", :last_name => "Smith")
 
-		#to grab 73 users with standard factory attributes:
-		@users = Grab.seventy_three_users
+#to grab 73 users with standard factory attributes:
+@users = Grab.seventy_three_users
+```
 
 Practical examples:
 ===================
 
 In a controller spec...
-		describe "GET /posts/1" do
 
-		  integrate_views
+```
+describe "GET /posts/1" do
 
-		  before do
-				# will create a record with these attributes if required, if not it will find the existing record
-		  	@post = Grab.one_post :title => "This is my first post", :body => "This is the post body"
-		  end
-  
-		  def	do_get
-		  	get :show, :id => @post
-		  end
-  
-		  it "should show the post title" do
-		  	do_get
-		  	response.should include_text(/This is my first post/)
-		  end
+  integrate_views
 
-			it "should show the post body" do
-				do_get
-				response.should include_text(/This is the post body/)
-			end
-  
-		end
+  before do
+		# will create a record with these attributes if required, if not it will find the existing record
+  	@post = Grab.one_post :title => "This is my first post", :body => "This is the post body"
+  end
+
+  def	do_get
+  	get :show, :id => @post
+  end
+
+  it "should show the post title" do
+  	do_get
+  	response.should include_text(/This is my first post/)
+  end
+
+	it "should show the post body" do
+		do_get
+		response.should include_text(/This is the post body/)
+	end
+
+end
 
 
-		describe "GET /posts?page=1" do
-	
-			# testing pagination
+describe "GET /posts?page=1" do
 
-			integrate_views
-	
-			before do
-				# ensures there are at least eleven Post records
-				# if there are less than eleven, new posts are created
-				# if there are eleven or more no posts are created
-				Grab.eleven_posts
-			end
-	
-			def	do_get
-				get :index, :page => 1
-			end
-	
-			it "should find the latest 10 posts" do
-				do_get
-				assigns[:posts].should == Post.find(:all, :order => "created_at DESC", :limit => 10)
-			end
+	# testing pagination
 
-		end
+	integrate_views
+
+	before do
+		# ensures there are at least eleven Post records
+		# if there are less than eleven, new posts are created
+		# if there are eleven or more no posts are created
+		Grab.eleven_posts
+	end
+
+	def	do_get
+		get :index, :page => 1
+	end
+
+	it "should find the latest 10 posts" do
+		do_get
+		assigns[:posts].should == Post.find(:all, :order => "created_at DESC", :limit => 10)
+	end
+
+end
+```
 
 At the moment, all numbers between one and ninety_nine are supported. The general syntax for Grab methods is:
 
-		Grab.[number_in_words]_[factory_name]
+``` ruby
+Grab.[number_in_words]_[factory_name]
+```
 
 Performance gains
 ==================
