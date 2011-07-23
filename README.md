@@ -3,28 +3,22 @@ Factory Grabber
 
 Factory grabber speeds up your tests by grabbing the nearest appropriate database records to suit your needs.
 
-The idea is simple: most of the time, when using factories, you don't really care about the specific attributes, you just need a database record to play with. factory_grabber will _'grab'_ a matching record from the database if available or create any extra records if required. Less inserts to the database means faster tests.
+The idea is simple: most of the time, when using factories, you don't really care about the specific attributes, you just need a database record to play with. factory_grabber will *'grab'* a matching record from the database if available or create any extra records if required. Less inserts to the database means faster tests.
 
-At the moment, only "factory_girl":http://github.com/thoughtbot/factory_girl by thoughtbot is supported. If you'd like to see more factories supported please let me know (gavin@handyrailstips.com)
+At the moment, only [factory_girl](http://github.com/thoughtbot/factory_girl) by thoughtbot is supported. If you'd like to see more factories supported please let me know.
 
 To install:
 ===========
 
 
-As a gem:
----------
+		gem install git://github.com/GavinM/factory_grabber.git
 
-		sudo gem install git://github.com/GavinM/factory_grabber.git
+		# Gemfile
+		group :test do
+  		gem "factory_girl_rails"
+  		gem "factory_grbber"
+		end
 
-		# environment.rb
-		config.gem "thoughtbot-factory_girl", :lib => "factory_girl"
-		config.gem "factory_grbber", :version => ">=1.0.2", :lib => false
-
-As a plugin:
-------------
-		script/plugin install git://github.com/GavinM/factory_grabber.git
-		
-		
 Important:
 ----------
 		
@@ -154,6 +148,6 @@ Feedback
 This project is still an infant - if the Ruby community find it useful I plan on adding a lot more. Please send any ideas/feedback to gavin@handyrailstips.com
 
 
-Free to upload, edit, share, fork etc.<br />
-[Gavin Morrice](http://gavinmorrice.com)<br />
-[www.handyrailstips.com](:http://handyrailstips.com/tips/20)
+Free to upload, edit, share, fork etc.
+
+[Gavin Morrice](http://gavinmorrice.com)
