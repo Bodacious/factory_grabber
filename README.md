@@ -163,3 +163,4 @@ This project is still an infant - if the Ruby community find it useful I plan on
 Free to upload, edit, share, fork etc.
 
 [Gavin Morrice](http://gavinmorrice.com)
+Travis CI: [![Build Status](http://travis-ci.org/Bodacious/factory_grabber.png)](http://travis-ci.org/Bodacious/factory_grabber)
